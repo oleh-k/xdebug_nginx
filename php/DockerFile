@@ -1,1 +1,8 @@
 FROM php:8.2-fpm-alpine
+
+RUN apk add --no-cache $PHPIZE_DEPS autoconf g++ make linux-headers
+
+COPY ./php/php.ini /usr/local/etc/php/conf.d/php.ini
+
+RUN pecl install -o -f xdebug \
+    && docker-php-ext-enable xdebug
